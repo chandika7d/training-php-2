@@ -1,5 +1,5 @@
 <?php
-include "./Utils/DB.php";
+include APP_PATH . "/Utils/DB.php";
 class Model
 {
     protected $db;

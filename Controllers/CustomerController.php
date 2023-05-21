@@ -1,6 +1,6 @@
 <?php
-include "Controller.php";
-require_once "./Models/ModelCustomer.php";
+require_once "Controller.php";
+require_once APP_PATH . "/Models/ModelCustomer.php";
 
 class CustomerController extends Controller {
     function __construct(){
@@ -11,7 +11,7 @@ class CustomerController extends Controller {
         return $this->model_customer->get();
     }
 
-    function create(){
+    function store(){
         $name = $this->post("name");
         $idcountry = $this->post("idcountry");
         $phone = $this->post("phone");
@@ -25,5 +25,27 @@ class CustomerController extends Controller {
             'email' => $email,
             'password' => DB::RAW("SHA1('$password')"),
         ]);
+    }
+    
+    function save($id){
+        $name = $this->post("name");
+        $idcountry = $this->post("idcountry");
+        $phone = $this->post("phone");
+        $email = $this->post("email");
+        $password = $this->post("password");
+
+        return $id;
+
+        return $this->model_customer->update($id, [
+            'name' => $name,
+            'idcountry' => $idcountry,
+            'phone' => $phone,
+            'email' => $email,
+            'password' => DB::RAW("SHA1('$password')"),
+        ]);
+    }
+    
+    function destroy(){
+        return $this->get();
     }
 }

@@ -1,5 +1,5 @@
 <?php
-include "Controller.php";
+require_once "Controller.php";
 
 class AppController extends Controller {
     function __construct(){

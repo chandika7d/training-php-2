@@ -1,8 +1,8 @@
 <?php
 include "Model.php";
-class ModelCustomer extends Model
+class ModelCountry extends Model
 {
-    protected $table = "customer";
+    protected $table = "country";
 
     function get()
     {
@@ -22,16 +22,10 @@ class ModelCustomer extends Model
 
     function create($data)
     {
+        $this->db->reset();
         $this->db->data($data);
         $id = $this->db->insert();
         if ($id) return $this->getById($id);
-        else return false;
-    }
-    function update($id, array $data)
-    {
-        $this->db->data($data);
-        $this->db->where("{$this->primaryKey} = '$id'");
-        if ($this->db->update()) return $this->getById($id);
         else return false;
     }
 }

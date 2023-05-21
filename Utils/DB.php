@@ -1,5 +1,5 @@
 <?php
-include "./Config/database.php";
+include APP_PATH . "/Config/database.php";
 
 class RAW
 {
@@ -114,6 +114,7 @@ class DB
             http_response_code(500);
             die(json_encode([
                 "message" => $th->getMessage(),
+                "query" => $this->query,
             ]));
         }
     }
@@ -150,37 +151,6 @@ class DB
         return new RAW($data);
     }
 
-    function selectQuery()
-    {
-        $this->query = "SELECT $this->select from $this->table";
-        if (count($this->joins) > 0) {
-            $this->query .= implode("\n", $this->joins);
-        }
-        if (count($this->where) > 0) {
-            $this->query .= "\n WHERE " . implode(" AND ", $this->where);
-        }
-        if (count($this->orders) > 0) {
-            $this->query .= "\n ORDER BY " . implode(",", $this->orders);
-        }
-        if (!empty($this->limit)) {
-            $this->query .= "\n LIMIT $this->limit";
-        }
-    }
-    function insertQuery()
-    {
-        $this->query = "INSERT INTO $this->table ";
-        if (count($this->data) > 0) {
-            $keys = [];
-            $values = [];
-            foreach ($this->data as $key => $value) {
-                $keys[] = $key;
-                $values[] = $value instanceof RAW ? $value->get() : "'{$value}'";
-            }
-
-            $this->query .= "(" . implode(" , ", $keys) . ") VALUES(" . implode(",", $values) . ")";
-        }
-    }
-
     function lastQuery()
     {
         return $this->query;
@@ -206,14 +176,50 @@ class DB
 
     function get()
     {
-        $this->selectQuery();
+        $this->query = "SELECT $this->select from $this->table";
+        if (count($this->joins) > 0) {
+            $this->query .= implode("\n", $this->joins);
+        }
+        if (count($this->where) > 0) {
+            $this->query .= "\n WHERE " . implode(" AND ", $this->where);
+        }
+        if (count($this->orders) > 0) {
+            $this->query .= "\n ORDER BY " . implode(",", $this->orders);
+        }
+        if (!empty($this->limit)) {
+            $this->query .= "\n LIMIT $this->limit";
+        }
+
         $result = $this->query($this->query);
         return $this->multiple_assoc($result);
     }
 
     function insert()
     {
-        $this->insertQuery();
+        $this->query = "INSERT INTO $this->table ";
+        if (count($this->data) > 0) {
+            $keys = [];
+            $values = [];
+            foreach ($this->data as $key => $value) {
+                $keys[] = $key;
+                $values[] = $value instanceof RAW ? $value->get() : "'{$value}'";
+            }
+
+            $this->query .= "(" . implode(" , ", $keys) . ") VALUES(" . implode(",", $values) . ")";
+        }
+        return $this->query($this->query, true);
+    }
+    function update()
+    {
+        $this->query = "UPDATE $this->table SET ";
+        if (count($this->data) > 0) {
+            $arr = [];
+            foreach ($this->data as $key => $value) {
+                $val = $value instanceof RAW ? $value->get() : "'{$value}'";
+                $arr[] = "{$key} = {$val}";
+            }
+            $this->query .= implode(" , ", $arr);
+        }
         return $this->query($this->query, true);
     }
 }
