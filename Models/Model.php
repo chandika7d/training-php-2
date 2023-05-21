@@ -1,27 +1,22 @@
 <?php
-include "./Config/database.php";
+include "./Utils/DB.php";
 class Model
 {
-    public $error = "";
-    private $driver = null;
+    protected $db;
+    protected $table = "";
+    protected $primaryKey = "id";
+
     function __construct()
     {
-        $this->driver = new mysqli('127.0.0.1', 'root', 'password', 'gocar2');
-        if ($this->driver->connect_error) {
-            die("Koneksi Gagal: " . $this->driver->connect_error);
-        }
+        $this->db = new DB();
+        $this->db->table($this->table);
+        $this->db->primaryKey($this->primaryKey);
     }
 
     function __destruct()
     {
-        if ($this->driver !== null) {
-            $this->driver = null;
+        if ($this->db !== null) {
+            $this->db = null;
         }
-    }
-
-    function select($query)
-    {
-        $data = mysqli_query($this->driver, $query);
-        return mysqli_fetch_assoc($data);
     }
 }

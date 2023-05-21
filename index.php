@@ -1,48 +1,39 @@
 <?php
 define('APP_PATH', __DIR__);
 define('SYS_GLOBAL_VAR', '_d326_fw');
-// ini_set('display_errors', '1');
+ini_set('display_errors', '1');
 session_start();
-
-function set($name, $value)
-{
-    $GLOBALS[SYS_GLOBAL_VAR][$name] = $value;
-}
-
-function get($name, $default = null)
-{
-    return isset($GLOBALS[SYS_GLOBAL_VAR][$name]) ? $GLOBALS[SYS_GLOBAL_VAR][$name] : $default;
-}
+header('Content-type: application/json; charset=utf-8');
 
 function run()
 {
-    set('baseUrl', $_SERVER['SCRIPT_NAME']);
-    $route = explode("/", rtrim($_SERVER['PATH_INFO'], '/'));
-    $classname = ucfirst($route[1]) . "Controller";
+    $route = explode("/", rtrim($_SERVER['PATH_INFO'] ?? "", '/'));
+    $classname = $route[1] ?? "";
     $functionname = $route[2] ?? "";
 
     if (empty($classname)) {
-        $classname = "HomeController";
+        $classname = "AppController";
+    } else {
+        $classname = ucfirst($route[1]) . "Controller";
     }
+
     if (empty($functionname)) {
         $functionname = "index";
     }
-    set('classname', $classname);
 
-    try {
-        include(APP_PATH . "/Controllers/{$classname}.php");
-        $class = new $classname();
-        return $class->$functionname();
-    } catch (\Throwable $th) {
-        return [
-            "data" => "Not Found",
-            "code" => 404
-        ];
-    }
+    // try {
+    include(APP_PATH . "/Controllers/{$classname}.php");
+    $class = new $classname();
+    return $class->$functionname();
+    // } catch (\Throwable $th) {
+    //     return [
+    //         "data" => "Not Found",
+    //         "code" => 404
+    //     ];
+    // }
 }
 
 $callback = run();
-header('Content-type: application/json; charset=utf-8');
 if (isset($callback["code"])) {
     http_response_code($callback["code"]);
     echo json_encode($callback["data"]);
