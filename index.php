@@ -33,10 +33,16 @@ function run()
         $class = new $classname();
         return call_user_func_array([$class, $functionname], $result["params"]);
     } catch (\Throwable $th) {
-        return [
-            "data" => ["message" => "Not Found"],
-            "code" => 404
-        ];
+        if (ini_get("display_errors") == 1)
+            return [
+                "data" => ["message" => $th->getMessage()],
+                "code" => 404
+            ];
+        else
+            return [
+                "data" => ["message" => "Not Found"],
+                "code" => 404
+            ];
     }
 }
 

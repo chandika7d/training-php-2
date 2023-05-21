@@ -1,5 +1,8 @@
 <?php
-define("DB_HOST", "127.0.0.1");
-define("DB_NAME", "gocar2");
-define("DB_USER", "root");
-define("DB_PASSWORD", "password");
+
+return [
+    "host" => "127.0.0.1",
+    "name" => "gocar2",
+    "user" => "root",
+    "password" => "password",
+];

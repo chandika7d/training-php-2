@@ -1,5 +1,4 @@
 <?php
-include APP_PATH . "/Config/database.php";
 
 class RAW
 {
@@ -30,7 +29,8 @@ class DB
     function __construct()
     {
         try {
-            $this->driver = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+            $config = include APP_PATH . "/Config/database.php";
+            $this->driver = new mysqli($config["host"], $config["user"], $config["password"], $config["name"]);
         } catch (\Throwable $th) {
             if ($th->getCode() == 1045) {
                 http_response_code(500);
@@ -192,6 +192,23 @@ class DB
 
         $result = $this->query($this->query);
         return $this->multiple_assoc($result);
+    }
+    function first()
+    {
+        $this->query = "SELECT $this->select from $this->table";
+        if (count($this->joins) > 0) {
+            $this->query .= implode("\n", $this->joins);
+        }
+        if (count($this->where) > 0) {
+            $this->query .= "\n WHERE " . implode(" AND ", $this->where);
+        }
+        if (count($this->orders) > 0) {
+            $this->query .= "\n ORDER BY " . implode(",", $this->orders);
+        }
+        $this->query .= "\n LIMIT 1";
+
+        $result = $this->query($this->query);
+        return $result->fetch_assoc();
     }
 
     function insert()

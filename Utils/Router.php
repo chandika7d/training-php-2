@@ -70,28 +70,30 @@ class Router
         set("router", $router);
     }
 
-    static function check($router, $method, $paths){
+    static function check($router, $method, $paths)
+    {
         $_route = $router[$method];
         $selected = null;
-        $params = null;
+        $params = $paths;
         foreach ($_route as $value) {
             $route_path = explode("/", rtrim($value["url"] ?? "/", '/'));
-            if(count($route_path) == count($paths)){
+            if (count($route_path) == count($paths)) {
                 $notsame = false;
                 foreach ($route_path as $key => $value2) {
-                    if($value2 !== $paths[$key] && $value2 !== "$"){
+                    if ($value2 !== $paths[$key] && $value2 !== "$") {
                         $notsame = true;
                     }
-                    unset($route_path[$key]);
+                    if ($value2 !== "$") {
+                        unset($params[$key]);
+                    }
                 }
 
-                if(!$notsame){
+                if (!$notsame) {
                     $selected = $value;
-                    $params = $route_path;
                 }
             }
 
-            if($selected){
+            if ($selected) {
                 break;
             }
         }

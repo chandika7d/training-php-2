@@ -11,6 +11,10 @@ class CustomerController extends Controller {
         return $this->model_customer->get();
     }
 
+    function show($id){
+        return $this->model_customer->getById($id);
+    }
+
     function store(){
         $name = $this->post("name");
         $idcountry = $this->post("idcountry");
