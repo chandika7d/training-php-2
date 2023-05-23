@@ -237,6 +237,6 @@ class DB
             }
             $this->query .= implode(" , ", $arr);
         }
-        return $this->query($this->query, true);
+        return $this->query($this->query);
     }
 }

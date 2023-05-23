@@ -16,7 +16,7 @@ class ModelCustomer extends Model
         $this->db->reset();
         $this->db->select("customer.id, customer.name, CONCAT(country.countrycode, customer.phone) as phone, customer.email");
         $this->db->join("country", "country.id", "customer.idcountry", "inner");
-        $this->db->where("customer.id = '{$id}'");
+        $this->db->where("{$this->table}.{$this->primaryKey} = '{$id}'");
         return $this->db->first();
     }
 

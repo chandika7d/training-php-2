@@ -1,18 +1,18 @@
 <?php
 require_once "Controller.php";
-require_once APP_PATH . "/Models/ModelCustomer.php";
+require_once APP_PATH . "/Models/ModelCountry.php";
 
-class CustomerController extends Controller {
+class CountryController extends Controller {
     function __construct(){
         parent::__construct();
-        $this->model_customer = new ModelCustomer();
+        $this->model_country = new ModelCountry();
     }
     function index(){
-        return $this->model_customer->get();
+        return $this->model_country->get();
     }
 
     function show($id){
-        return $this->model_customer->getById($id);
+        return $this->model_country->getById($id);
     }
 
     function store(){
@@ -39,7 +39,7 @@ class CustomerController extends Controller {
             $data['password'] = DB::RAW("SHA1('$password')");
         }
 
-        return $this->model_customer->create($data);
+        return $this->model_country->create($data);
     }
     
     function save($id){
@@ -66,7 +66,7 @@ class CustomerController extends Controller {
             $data['password'] = DB::RAW("SHA1('$password')");
         }
 
-        return $this->model_customer->update($id, $data);
+        return $this->model_country->update($id, $data);
     }
     
     function destroy(){

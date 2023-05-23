@@ -10,3 +10,11 @@ Router::get("/customer/$", ["CustomerController", "show"]);
 Router::post("/customer", ["CustomerController", "store"]);
 Router::post("/customer/$", ["CustomerController", "save"]);
 Router::delete("/customer/$", ["CustomerController", "destroy"]);
+
+
+// Country
+Router::get("/country", ["CountryController"]);
+Router::get("/country/$", ["CountryController", "show"]);
+Router::post("/country", ["CountryController", "store"]);
+Router::post("/country/$", ["CountryController", "save"]);
+Router::delete("/country/$", ["CountryController", "destroy"]);
