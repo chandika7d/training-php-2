@@ -66,3 +66,11 @@ Router::get("/location/$", ["LocationController", "show"]);
 Router::post("/location", ["LocationController", "store"]);
 Router::post("/location/$", ["LocationController", "save"]);
 Router::delete("/location/$", ["LocationController", "destroy"]);
+
+
+// Vehicle
+Router::get("/vehicle", ["VehicleController"]);
+Router::get("/vehicle/$", ["VehicleController", "show"]);
+Router::post("/vehicle", ["VehicleController", "store"]);
+Router::post("/vehicle/$", ["VehicleController", "save"]);
+Router::delete("/vehicle/$", ["VehicleController", "destroy"]);
