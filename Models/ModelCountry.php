@@ -1,5 +1,5 @@
 <?php
-include "Model.php";
+require_once "Model.php";
 class ModelCountry extends Model
 {
     protected $table = "country";

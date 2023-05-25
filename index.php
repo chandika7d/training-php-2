@@ -1,6 +1,6 @@
 <?php
 define('APP_PATH', __DIR__);
-define('SYS_GLOBAL_VAR', '_d326_fw');
+define('SYS_GLOBAL_VAR', '_gojek2an');
 ini_set('display_errors', '1');
 session_start();
 header('Content-type: application/json; charset=utf-8');
@@ -20,9 +20,7 @@ function getHeader($name = null, $default = null)
     $headers = headers_list();
     $new_headers = [];
     foreach ($headers as $header) {
-        // split each header by ':' and assign them to $key and $value
-        list($key, $value) = explode(':', $header, 2); // limit the explode to 2 items. 
-        // add trimed variables to the new array
+        list($key, $value) = explode(':', $header, 2);
         $new_headers[strtolower(trim($key))] = trim($value);
     }
     return $name == null ? $new_headers : (isset($new_headers[$name]) ? $new_headers[$name] : $default);
@@ -60,6 +58,7 @@ function run()
 }
 
 $callback = run();
+
 if (isset($callback["code"])) {
     http_response_code($callback["code"]);
     echo json_encode($callback["data"]);

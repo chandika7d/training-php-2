@@ -1,5 +1,5 @@
 <?php
-include "Model.php";
+require_once "Model.php";
 class ModelVehicle extends Model
 {
     protected $table = "vehicle";

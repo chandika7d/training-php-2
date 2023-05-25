@@ -74,3 +74,10 @@ Router::get("/vehicle/$", ["VehicleController", "show"]);
 Router::post("/vehicle", ["VehicleController", "store"]);
 Router::post("/vehicle/$", ["VehicleController", "save"]);
 Router::delete("/vehicle/$", ["VehicleController", "destroy"]);
+
+// Order
+Router::get("/order", ["OrderController"]);
+Router::get("/order/$", ["OrderController", "show"]);
+Router::post("/order", ["OrderController", "store"]);
+Router::post("/order/$", ["OrderController", "save"]);
+Router::delete("/order/$", ["OrderController", "destroy"]);

@@ -1,5 +1,5 @@
 <?php
-include "Model.php";
+require_once "Model.php";
 class ModelLocation extends Model
 {
     protected $table = "location";
@@ -13,7 +13,7 @@ class ModelLocation extends Model
     {
         $this->db->reset();
         $this->db->where("{$this->table}.{$this->primaryKey} = '{$id}'");
-        return $this->db->get();
+        return $this->db->first();
     }
 
     function create($data)

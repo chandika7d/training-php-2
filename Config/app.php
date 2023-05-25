@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "app_name" => "API Gojek",
+    "app_name" => "API Gojek2an",
     "app_version" => "v0.0.1",
     "author" => [
         "name" => "Chandika Nurdiansyah",
