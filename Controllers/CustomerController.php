@@ -3,8 +3,7 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelCustomer.php";
 
 class CustomerController extends Controller {
-    private function __construct(){
-        parent::__construct();
+    public function __construct(){
         $this->model_customer = new ModelCustomer();
     }
     public function index(){

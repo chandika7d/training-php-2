@@ -3,8 +3,7 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelRegion.php";
 
 class RegionController extends Controller {
-    private function __construct(){
-        parent::__construct();
+    public function __construct(){
         $this->model_region = new ModelRegion();
     }
     public function index(){

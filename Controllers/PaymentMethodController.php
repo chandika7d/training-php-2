@@ -3,8 +3,7 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelPaymentMethod.php";
 
 class PaymentMethodController extends Controller {
-    private function __construct(){
-        parent::__construct();
+    public function __construct(){
         $this->payment_method = new ModelPaymentMethod();
     }
     public function index(){

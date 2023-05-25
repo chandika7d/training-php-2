@@ -8,8 +8,7 @@ require_once APP_PATH . "/Models/ModelLocation.php";
 require_once APP_PATH . "/Models/ModelRideType.php";
 
 class OrderController extends Controller {
-    private function __construct(){
-        parent::__construct();
+    public function __construct(){
         $this->model_order = new ModelOrder();
         $this->model_driver = new ModelDriver();
         $this->model_customer = new ModelCustomer();
@@ -152,7 +151,7 @@ class OrderController extends Controller {
         return $this->get();
     }
 
-    private function addAttribute($order){
+    protected function addAttribute($order){
         $driver = $this->model_driver->getById($order['iddriver']);
         $customer = $this->model_customer->getById($order['idcustomer']);
         $vechile = $this->model_vehicle->getById($order['idvehicle']);
@@ -178,7 +177,7 @@ class OrderController extends Controller {
         return $order;
     }
 
-    private function generateIdOrder($vehicle, $idcustomer, $iddriver){
+    protected function generateIdOrder($vehicle, $idcustomer, $iddriver){
         // RB-137786-24-20824
         $vehicleCode = preg_replace('/[^A-Z]/', "", $vehicle['ridetype']);
         $date = date("Ymd");

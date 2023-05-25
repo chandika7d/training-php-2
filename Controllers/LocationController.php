@@ -3,8 +3,7 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelLocation.php";
 
 class LocationController extends Controller {
-    private function __construct(){
-        parent::__construct();
+    public function __construct(){
         $this->model_country = new ModelLocation();
     }
     public function index(){

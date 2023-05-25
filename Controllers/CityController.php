@@ -3,8 +3,7 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelCity.php";
 
 class CityController extends Controller {
-    private function __construct(){
-        parent::__construct();
+    public function __construct(){
         $this->model_city = new ModelCity();
     }
     public function index(){

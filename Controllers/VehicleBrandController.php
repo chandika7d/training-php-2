@@ -3,8 +3,7 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelVehicleBrand.php";
 
 class VehicleBrandController extends Controller {
-    private function __construct(){
-        parent::__construct();
+    public function __construct(){
         $this->vehicle_brand = new ModelVehicleBrand();
     }
     public function index(){

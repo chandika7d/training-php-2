@@ -3,7 +3,7 @@
 class RAW
 {
     private $data;
-    private function __construct($string)
+    public function __construct($string)
     {
         $this->data = $string;
     }
@@ -26,10 +26,10 @@ class DB
     private $orders = [];
     private $limit = "";
 
-    private function __construct()
+    public function __construct()
     {
         try {
-            $config = include_once APP_PATH . "/Config/database.php";
+            $config = include APP_PATH . "/Config/database.php";
             $this->driver = new mysqli($config["host"], $config["user"], $config["password"], $config["name"]);
         } catch (\Throwable $th) {
             if ($th->getCode() == 1045) {
@@ -44,7 +44,7 @@ class DB
         }
     }
 
-    private function __destruct()
+    public function __destruct()
     {
         if ($this->driver !== null) {
             $this->driver->close();

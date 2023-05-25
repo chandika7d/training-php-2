@@ -1,6 +1,7 @@
 <?php
 define('APP_PATH', __DIR__);
 define('SYS_GLOBAL_VAR', '_gojek2an');
+ini_set('display_errors', '1');
 session_start();
 header('Content-type: application/json; charset=utf-8');
 
@@ -38,22 +39,22 @@ function run()
         $functionname = $result["selected"]["function"];
     }
 
-    try {
+    // try {
         require_once(APP_PATH . "/Controllers/{$classname}.php");
         $class = new $classname();
         return call_user_func_array([$class, $functionname], $result["params"]);
-    } catch (\Throwable $th) {
-        if (ini_get("display_errors") == 1)
-            return [
-                "data" => ["message" => $th->getMessage()],
-                "code" => 404
-            ];
-        else
-            return [
-                "data" => ["message" => "Not Found"],
-                "code" => 404
-            ];
-    }
+    // } catch (\Throwable $th) {
+    //     if (ini_get("display_errors") == 1)
+    //         return [
+    //             "data" => ["message" => $th->getMessage()],
+    //             "code" => 404
+    //         ];
+    //     else
+    //         return [
+    //             "data" => ["message" => "Not Found"],
+    //             "code" => 404
+    //         ];
+    // }
 }
 
 $callback = run();

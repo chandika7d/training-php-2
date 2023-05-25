@@ -3,7 +3,7 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelCountry.php";
 
 class CountryController extends Controller {
-    private function __construct(){
+    public function __construct(){
         $this->model_country = new ModelCountry();
     }
     public function index(){

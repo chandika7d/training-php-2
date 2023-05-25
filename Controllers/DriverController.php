@@ -3,8 +3,7 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelDriver.php";
 
 class DriverController extends Controller {
-    private function __construct(){
-        parent::__construct();
+    public function __construct(){
         $this->model_driver = new ModelDriver();
     }
     public function index(){
