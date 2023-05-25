@@ -1,23 +1,19 @@
 <?php
 include "Model.php";
-class ModelCustomer extends Model
+class ModelRideType extends Model
 {
-    protected $table = "customer";
+    protected $table = "ridetype";
 
     function get()
     {
         $this->db->reset();
-        $this->db->select("{$this->table}.id, {$this->table}.name, CONCAT(country.countrycode, {$this->table}.phone) as phone, {$this->table}.email, {$this->table}.saldo, {$this->table}.point");
-        $this->db->join("country", "country.id", "{$this->table}.idcountry", "inner");
         return $this->db->get();
     }
     function getById($id)
     {
         $this->db->reset();
-        $this->db->select("{$this->table}.id, {$this->table}.name, CONCAT(country.countrycode, {$this->table}.phone) as phone, {$this->table}.email, {$this->table}.saldo, {$this->table}.point");
-        $this->db->join("country", "country.id", "{$this->table}.idcountry", "inner");
         $this->db->where("{$this->table}.{$this->primaryKey} = '{$id}'");
-        return $this->db->first();
+        return $this->db->get();
     }
 
     function create($data)
@@ -27,6 +23,7 @@ class ModelCustomer extends Model
         if ($id) return $this->getById($id);
         else return false;
     }
+
     function update($id, array $data)
     {
         $this->db->data($data);

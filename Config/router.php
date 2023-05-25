@@ -4,6 +4,27 @@ require_once APP_PATH . "/Utils/Router.php";
 // App
 Router::get("/", ["AppController"]);
 
+// RideType
+Router::get("/ride-type", ["RideTypeController"]);
+Router::get("/ride-type/$", ["RideTypeController", "show"]);
+Router::post("/ride-type", ["RideTypeController", "store"]);
+Router::post("/ride-type/$", ["RideTypeController", "save"]);
+Router::delete("/ride-type/$", ["RideTypeController", "destroy"]);
+
+// VehicleBrand
+Router::get("/vehicle-brand", ["VehicleBrandController"]);
+Router::get("/vehicle-brand/$", ["VehicleBrandController", "show"]);
+Router::post("/vehicle-brand", ["VehicleBrandController", "store"]);
+Router::post("/vehicle-brand/$", ["VehicleBrandController", "save"]);
+Router::delete("/vehicle-brand/$", ["VehicleBrandController", "destroy"]);
+
+// PaymentMethod
+Router::get("/payment-method", ["PaymentMethodController"]);
+Router::get("/payment-method/$", ["PaymentMethodController", "show"]);
+Router::post("/payment-method", ["PaymentMethodController", "store"]);
+Router::post("/payment-method/$", ["PaymentMethodController", "save"]);
+Router::delete("/payment-method/$", ["PaymentMethodController", "destroy"]);
+
 // Customer
 Router::get("/customer", ["CustomerController"]);
 Router::get("/customer/$", ["CustomerController", "show"]);

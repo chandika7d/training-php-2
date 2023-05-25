@@ -21,6 +21,8 @@ class CustomerController extends Controller {
         $phone = $this->post("phone");
         $email = $this->post("email");
         $password = $this->post("password");
+        $saldo = $this->post("saldo");
+        $point = $this->post("point");
 
         $data = [];
         if($name){
@@ -37,6 +39,12 @@ class CustomerController extends Controller {
         }
         if($password){
             $data['password'] = DB::RAW("SHA1('$password')");
+        }
+        if($saldo){
+            $data['saldo'] = $saldo;
+        }
+        if($point){
+            $data['point'] = $point;
         }
 
         return $this->model_customer->create($data);
@@ -48,6 +56,8 @@ class CustomerController extends Controller {
         $phone = $this->post("phone");
         $email = $this->post("email");
         $password = $this->post("password");
+        $saldo = $this->post("saldo");
+        $point = $this->post("point");
 
         $data = [];
         if($name){
@@ -64,6 +74,12 @@ class CustomerController extends Controller {
         }
         if($password){
             $data['password'] = DB::RAW("SHA1('$password')");
+        }
+        if($saldo){
+            $data['saldo'] = $saldo;
+        }
+        if($point){
+            $data['point'] = $point;
         }
 
         return $this->model_customer->update($id, $data);

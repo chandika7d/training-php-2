@@ -237,6 +237,9 @@ class DB
             }
             $this->query .= implode(" , ", $arr);
         }
+        if (count($this->where) > 0) {
+            $this->query .= "\n WHERE " . implode(" AND ", $this->where);
+        }
         return $this->query($this->query);
     }
 }
