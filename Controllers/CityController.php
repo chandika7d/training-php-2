@@ -18,6 +18,22 @@ class CityController extends Controller {
     function store(){
         $name = $this->post("name");
         $idregion = $this->post("idregion");
+        
+        $errors = [];
+        if(!$name){
+            $errors[] = "name is required";
+        }
+        if(!$idregion){
+            $errors[] = "idregion is required";
+        }else{
+            if(!is_numeric($idregion)){
+                $errors[] = "idregion must be number";
+            }
+        }
+
+        if(isset($errors)){
+            return ["statusCode" => 400, "errors" => $errors];
+        }
 
         $data = [];
         if($name){
@@ -35,6 +51,7 @@ class CityController extends Controller {
         $idregion = $this->post("idregion");
 
         $data = [];
+        
         if($name){
             $data['name'] = $name;
         }

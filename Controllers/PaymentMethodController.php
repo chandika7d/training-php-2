@@ -17,6 +17,13 @@ class PaymentMethodController extends Controller {
 
     function store(){
         $name = $this->post("name");
+        
+        if(!$name){
+            $errors[] = "name is required";
+        }
+        if(isset($errors)){
+            return ["statusCode" => 400, "errors" => $errors];
+        }
 
         $data = [];
         if($name){

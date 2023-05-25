@@ -19,6 +19,22 @@ class RegionController extends Controller {
         $name = $this->post("name");
         $idcountry = $this->post("idcountry");
 
+        
+        if(!$name){
+            $errors[] = "name is required";
+        }
+        if(!$idcountry){
+            $errors[] = "idcountry is required";
+        }else{
+            if(!is_numeric($idcountry)){
+                $errors[] = "idcountry must be number";
+            }
+        }
+
+        if(isset($errors)){
+            return ["statusCode" => 400, "errors" => $errors];
+        }
+
         $data = [];
         if($name){
             $data['name'] = $name;

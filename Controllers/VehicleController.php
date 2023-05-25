@@ -22,6 +22,36 @@ class VehicleController extends Controller {
         $platenumber = $this->post("platenumber");
         $date = DB::RAW("NOW()");
 
+        
+        if(!$iddriver){
+            $errors[] = "iddriver is required";
+        }else{
+            if(!is_numeric($iddriver)){
+                $errors[] = "iddriver must be number";
+            }
+        }
+        if(!$ridetype){
+            $errors[] = "ridetype is required";
+        }else{
+            if(!is_numeric($ridetype)){
+                $errors[] = "ridetype must be number";
+            }
+        }
+        if(!$idvehiclebrand){
+            $errors[] = "idvehiclebrand is required";
+        }else{
+            if(!is_numeric($idvehiclebrand)){
+                $errors[] = "idvehiclebrand must be number";
+            }
+        }
+        if(!$platenumber){
+            $errors[] = "platenumber is required";
+        }
+
+        if(isset($errors)){
+            return ["statusCode" => 400, "errors" => $errors];
+        }
+
         $data = [];
         if($iddriver){
             $data['iddriver'] = $iddriver;

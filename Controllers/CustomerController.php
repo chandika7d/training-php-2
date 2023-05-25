@@ -24,6 +24,39 @@ class CustomerController extends Controller {
         $saldo = $this->post("saldo");
         $point = $this->post("point");
 
+        $errors = [];
+        if(!$name){
+            $errors[] = "name is required";
+        }
+        if(!$idcountry){
+            $errors[] = "idcountry is required";
+        }else{
+            if(!is_numeric($idcountry)){
+                $errors[] = "idcountry must be number";
+            }
+        }
+        if(!$phone){
+            $errors[] = "phone is required";
+        }else{
+            if(strlen($phone) < 9){
+                $errors[] = "minimum phone length is 9";
+            }
+        }
+        if(!$email){
+            $errors[] = "email is required";
+        }
+        if(!$password){
+            $errors[] = "password is required";
+        }else{
+            if(strlen($password) < 6){
+                $errors[] = "minimum password length is 6";
+            }
+        }
+
+        if(isset($errors)){
+            return ["statusCode" => 400, "errors" => $errors];
+        }
+
         $data = [];
         if($name){
             $data['name'] = $name;

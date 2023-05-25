@@ -40,6 +40,55 @@ class OrderController extends Controller {
         $appservicefee = $this->post("appservicefee");
         $discount = $this->post("discount");
 
+        $errors = [];
+        if(!$orderdate){
+            $errors[] = "orderdate is required";
+        }
+        if(!$idcustomer){
+            $errors[] = "idcustomer is required";
+        }else{
+            if(!is_numeric($idcustomer)){
+                $errors[] = "idcustomer must be number";
+            }
+        }
+        if(!$iddriver){
+            $errors[] = "iddriver is required";
+        }else{
+            if(!is_numeric($iddriver)){
+                $errors[] = "iddriver must be number";
+            }
+        }
+        if(!$idvehicle){
+            $errors[] = "idvehicle is required";
+        }else{
+            if(!is_numeric($idvehicle)){
+                $errors[] = "idvehicle must be number";
+            }
+        }
+        if(!$distance){
+            $errors[] = "distance is required";
+        }else{
+            if(!is_numeric($distance)){
+                $errors[] = "distance must be number";
+            }
+        }
+        if(!$pickup){
+            $errors[] = "pickup is required";
+        }
+        if(!$drop){
+            $errors[] = "drop is required";
+        }
+        if(!$appservicefee){
+            $errors[] = "appservicefee is required";
+        }
+        if(!$discount){
+            $errors[] = "discount is required";
+        }
+
+        if(isset($errors)){
+            return ["statusCode" => 400, "errors" => $errors];
+        }
+
         $vehicle = $this->model_vehicle->getById($idvehicle);
 
         $id = $this->generateIdOrder($vehicle, $idcustomer, $iddriver);

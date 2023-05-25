@@ -19,6 +19,17 @@ class VehicleBrandController extends Controller {
         $name = $this->post("name");
         $brand = $this->post("brand");
 
+        if(!$name){
+            $errors[] = "name is required";
+        }
+        if(!$brand){
+            $errors[] = "brand is required";
+        }
+
+        if(isset($errors)){
+            return ["statusCode" => 400, "errors" => $errors];
+        }
+
         $data = [];
         if($name){
             $data['name'] = $name;

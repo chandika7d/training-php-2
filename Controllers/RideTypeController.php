@@ -19,6 +19,21 @@ class RideTypeController extends Controller {
         $name = $this->post("name");
         $kmfee = $this->post("kmfee");
 
+        if(!$name){
+            $errors[] = "name is required";
+        }
+        if(!$kmfee){
+            $errors[] = "kmfee is required";
+        }else{
+            if(!is_numeric($kmfee)){
+                $errors[] = "kmfee must be number";
+            }
+        }
+
+        if(isset($errors)){
+            return ["statusCode" => 400, "errors" => $errors];
+        }
+
         $data = [];
         if($name){
             $data['name'] = $name;

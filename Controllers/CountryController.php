@@ -19,6 +19,18 @@ class CountryController extends Controller {
         $name = $this->post("name");
         $countrycode = $this->post("countrycode");
 
+        $errors = [];
+        if(!$name){
+            $errors[] = "name is required";
+        }
+        if(!$countrycode){
+            $errors[] = "countrycode is required";
+        }
+
+        if(isset($errors)){
+            return ["statusCode" => 400, "errors" => $errors];
+        }
+
         $data = [];
         if($name){
             $data['name'] = $name;

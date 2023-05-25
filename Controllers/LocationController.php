@@ -20,6 +20,23 @@ class LocationController extends Controller {
         $address = $this->post("address");
         $lat = $this->post("lat");
         $lon = $this->post("lon");
+        
+        if(!$addressname){
+            $errors[] = "addressname is required";
+        }
+        if(!$address){
+            $errors[] = "address is required";
+        }
+        if(!$lat){
+            $errors[] = "lat is required";
+        }
+        if(!$lon){
+            $errors[] = "lon is required";
+        }
+
+        if(isset($errors)){
+            return ["statusCode" => 400, "errors" => $errors];
+        }
 
         $data = [];
         if($addressname){
@@ -30,9 +47,17 @@ class LocationController extends Controller {
         }
         if($lat){
             $data['lat'] = $lat;
+        }else{
+            if(!is_numeric($lat)){
+                $errors[] = "lat must be number";
+            }
         }
         if($lon){
             $data['lon'] = $lon;
+        }else{
+            if(!is_numeric($lon)){
+                $errors[] = "lon must be number";
+            }
         }
 
         return $this->model_country->create($data);
