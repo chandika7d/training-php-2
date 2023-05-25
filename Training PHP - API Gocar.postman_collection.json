@@ -1,0 +1,265 @@
+{
+	"info": {
+		"_postman_id": "586f7caa-c697-4178-80f4-a0dfde2bc8a9",
+		"name": "Training PHP : API Gocar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "984940"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Jessica Rekcah\",\r\n    \"idcountry\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customer/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customer",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Country",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/country",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"country"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Singapura\",\r\n    \"countrycode\": \"+65\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/country",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"country"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Driver",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ajang Rusmana\",\r\n    \"idcountry\": 1,\r\n    \"phone\": \"873412342134\",\r\n    \"email\": \"ajang@rusmana.com\",\r\n    \"password\": \"123456\",\r\n    \"idcity\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/driver",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"driver"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vehicle",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"iddriver\": 3,\r\n    \"ridetype\": 4,\r\n    \"idvehiclebrand\": 1,\r\n    \"platenumber\": \"D3423ACE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/vehicle",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"vehicle"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idcustomer\": 1,\r\n    \"iddriver\": 2,\r\n    \"idvehicle\": 2,\r\n    \"distance\": 5.2,\r\n    \"pickup\": {\r\n        // if avaiable\r\n        \"id\": 4\r\n        // auto create\r\n        // \"addressname\": \"Rumah Sakit Muhammadiah\",\r\n        // \"address\": \"Jl. Banteng\",\r\n        // \"lat\": 0.12314234234676,\r\n        // \"lon\": 102.12342135223234\r\n    },\r\n    \"drop\": {\r\n        // if avaiable\r\n        \"id\": 5\r\n        // auto create\r\n        // \"addressname\": \"SDN Bhaktiwinaya\",\r\n        // \"address\": \"Jl. Pasir Jaya V\",\r\n        // \"lat\": 0.12314233454455,\r\n        // \"lon\": 102.12342345433234\r\n    },\r\n    \"appservicefee\": 3000,\r\n    \"discount\": 5000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/order",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pickup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/order/pickup/GCL-20230525-12",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"order",
+								"pickup",
+								"GCL-20230525-12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drop",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/order/drop/GCL-20230525-12",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"order",
+								"drop",
+								"GCL-20230525-12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
