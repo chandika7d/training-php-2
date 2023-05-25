@@ -5,6 +5,7 @@ require_once APP_PATH . "/Models/ModelDriver.php";
 require_once APP_PATH . "/Models/ModelCustomer.php";
 require_once APP_PATH . "/Models/ModelVehicle.php";
 require_once APP_PATH . "/Models/ModelLocation.php";
+require_once APP_PATH . "/Models/ModelRideType.php";
 
 class OrderController extends Controller {
     function __construct(){
@@ -12,8 +13,9 @@ class OrderController extends Controller {
         $this->model_order = new ModelOrder();
         $this->model_driver = new ModelDriver();
         $this->model_customer = new ModelCustomer();
-        $this->model_vechile = new ModelVehicle();
+        $this->model_vehicle = new ModelVehicle();
         $this->model_location = new ModelLocation();
+        $this->model_ride_type = new ModelRideType();
     }
     function index(){
         $orders = $this->model_order->get();
@@ -28,35 +30,75 @@ class OrderController extends Controller {
     }
 
     function store(){
-        $name = $this->post("name");
-        $idregion = $this->post("idregion");
+        $orderdate = DB::RAW("NOW()");
+        $idcustomer = $this->post("idcustomer");
+        $iddriver = $this->post("iddriver");
+        $idvehicle = $this->post("idvehicle");
+        $distance = $this->post("distance");
+        $pickup = $this->post("pickup");
+        $drop = $this->post("drop");
+        $appservicefee = $this->post("appservicefee");
+        $discount = $this->post("discount");
 
-        $data = [];
-        if($name){
-            $data['name'] = $name;
+        $vehicle = $this->model_vehicle->getById($idvehicle);
+
+        $id = $this->generateIdOrder($vehicle, $idcustomer, $iddriver);
+
+        if(!isset($pickup['id'])){
+            $pickup = $this->model_location->create([
+                "addressname" => $pickup["addressname"],
+                "address" => $pickup["address"],
+                "lat" => $pickup["lat"],
+                "lon" => $pickup["lon"],
+            ]);
         }
-        if($idregion){
-            $data['idregion'] = $idregion;
+        
+        if(!isset($drop['id'])){
+            $drop = $this->model_location->create([
+                "addressname" => $drop["addressname"],
+                "address" => $drop["address"],
+                "lat" => $drop["lat"],
+                "lon" => $drop["lon"],
+            ]);
         }
+
+        $data = [
+            "id" => $id,
+            "orderdate" => $orderdate,
+            "idcustomer" => $idcustomer,
+            "iddriver" => $iddriver,
+            "idvehicle" => $idvehicle,
+            "distance" => $distance,
+            "appservicefee" => $appservicefee,
+            "tripfare" => ((int) $vehicle["kmfee"]) * $distance,
+            "discount" => $discount,
+            "idpickup" => $pickup["id"],
+            "iddrop" => $drop["id"],
+        ];
 
         return $this->model_order->create($data);
     }
     
-    function save($id){
-        $name = $this->post("name");
-        $idregion = $this->post("idregion");
+    function pickup($id){
+        $date = DB::RAW("NOW()");
 
-        $data = [];
-        if($name){
-            $data['name'] = $name;
-        }
-        if($idregion){
-            $data['idregion'] = $idregion;
-        }
+        $data = [
+            "pickupdate" => $date
+        ];
 
         return $this->model_order->update($id, $data);
     }
     
+    function drop($id){
+        $date = DB::RAW("NOW()");
+
+        $data = [
+            "dropdate" => $date
+        ];
+
+        return $this->model_order->update($id, $data);
+    }
+
     function destroy(){
         return $this->get();
     }
@@ -64,7 +106,7 @@ class OrderController extends Controller {
     function addAttribute($order){
         $driver = $this->model_driver->getById($order['iddriver']);
         $customer = $this->model_customer->getById($order['idcustomer']);
-        $vechile = $this->model_vechile->getById($order['idvehicle']);
+        $vechile = $this->model_vehicle->getById($order['idvehicle']);
         $pickup = $this->model_location->getById($order['idpickup']);
         $drop = $this->model_location->getById($order['iddrop']);
         $pickup['pickupdate'] = $order["pickupdate"];
@@ -85,5 +127,13 @@ class OrderController extends Controller {
         unset($order["iddrop"]);
 
         return $order;
+    }
+
+    function generateIdOrder($vehicle, $idcustomer, $iddriver){
+        // RB-137786-24-20824
+        $vehicleCode = preg_replace('/[^A-Z]/', "", $vehicle['ridetype']);
+        $date = date("Ymd");
+        $idorder = $vehicleCode . "-" . $date . "-". $idcustomer . $iddriver;
+        return  $idorder;
     }
 }

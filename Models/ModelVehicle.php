@@ -7,7 +7,7 @@ class ModelVehicle extends Model
     function get()
     {
         $this->db->reset();
-        $this->db->select("{$this->table}.id, {$this->table}.date as date, vehiclebrand.id, vehiclebrand.brand as brand, vehiclebrand.name as vehicle_name, ridetype.id as idridetype, ridetype.name as ridetype, {$this->table}.platenumber, driver.id as iddriver, driver.name as driver_name");
+        $this->db->select("{$this->table}.id, {$this->table}.date as date, vehiclebrand.id, vehiclebrand.brand as brand, vehiclebrand.name as vehicle_name, ridetype.id as idridetype, ridetype.name as ridetype, ridetype.kmfee, {$this->table}.platenumber, driver.id as iddriver, driver.name as driver_name");
         $this->db->join("driver", "driver.id", "{$this->table}.iddriver", "inner");
         $this->db->join("vehiclebrand", "vehiclebrand.id", "{$this->table}.idvehiclebrand", "inner");
         $this->db->join("ridetype", "ridetype.id", "{$this->table}.ridetype", "inner");
@@ -16,7 +16,7 @@ class ModelVehicle extends Model
     function getById($id)
     {
         $this->db->reset();        
-        $this->db->select("{$this->table}.id, {$this->table}.date as date, vehiclebrand.id, vehiclebrand.brand as brand, vehiclebrand.name as vehicle_name, ridetype.id as idridetype, ridetype.name as ridetype, {$this->table}.platenumber, driver.id as iddriver, driver.name as driver_name");
+        $this->db->select("{$this->table}.id, {$this->table}.date as date, vehiclebrand.id, vehiclebrand.brand as brand, vehiclebrand.name as vehicle_name, ridetype.id as idridetype, ridetype.name as ridetype, ridetype.kmfee, {$this->table}.platenumber, driver.id as iddriver, driver.name as driver_name");
         $this->db->join("driver", "driver.id", "{$this->table}.iddriver", "inner");
         $this->db->join("vehiclebrand", "vehiclebrand.id", "{$this->table}.idvehiclebrand", "inner");
         $this->db->join("ridetype", "ridetype.id", "{$this->table}.ridetype", "inner");

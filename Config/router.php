@@ -79,5 +79,5 @@ Router::delete("/vehicle/$", ["VehicleController", "destroy"]);
 Router::get("/order", ["OrderController"]);
 Router::get("/order/$", ["OrderController", "show"]);
 Router::post("/order", ["OrderController", "store"]);
-Router::post("/order/$", ["OrderController", "save"]);
-Router::delete("/order/$", ["OrderController", "destroy"]);
+Router::post("/order/pickup/$", ["OrderController", "pickup"]);
+Router::post("/order/drop/$", ["OrderController", "drop"]);

@@ -20,9 +20,8 @@ class ModelOrder extends Model
     function create($data)
     {
         $this->db->data($data);
-        $id = $this->db->insert();
-        if ($id) return $this->getById($id);
-        else return false;
+        $this->db->insert();
+        return $this->getById($data['id']);
     }
 
     function update($id, array $data)
