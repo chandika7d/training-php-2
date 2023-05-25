@@ -18,3 +18,10 @@ Router::get("/country/$", ["CountryController", "show"]);
 Router::post("/country", ["CountryController", "store"]);
 Router::post("/country/$", ["CountryController", "save"]);
 Router::delete("/country/$", ["CountryController", "destroy"]);
+
+// Driver
+Router::get("/driver", ["DriverController"]);
+Router::get("/driver/$", ["DriverController", "show"]);
+Router::post("/driver", ["DriverController", "store"]);
+Router::post("/driver/$", ["DriverController", "save"]);
+Router::delete("/driver/$", ["DriverController", "destroy"]);
