@@ -2,7 +2,7 @@
 
 class Router
 {
-    static function get($url, array $params)
+    public static function get($url, array $params)
     {
         $router = get("router", [
             "GET" => [],
@@ -19,7 +19,7 @@ class Router
         set("router", $router);
     }
 
-    static function post($url, array $params)
+    public static function post($url, array $params)
     {
         $router = get("router", [
             "GET" => [],
@@ -36,7 +36,7 @@ class Router
         set("router", $router);
     }
 
-    static function put($url, array $params)
+    public static function put($url, array $params)
     {
         $router = get("router", [
             "GET" => [],
@@ -53,7 +53,7 @@ class Router
         set("router", $router);
     }
 
-    static function delete($url, array $params)
+    public static function delete($url, array $params)
     {
         $router = get("router", [
             "GET" => [],
@@ -70,7 +70,7 @@ class Router
         set("router", $router);
     }
 
-    static function check($router, $method, $paths)
+    public static function check($router, $method, $paths)
     {
         $_route = $router[$method];
         $selected = null;

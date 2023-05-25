@@ -3,19 +3,19 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelPaymentMethod.php";
 
 class PaymentMethodController extends Controller {
-    function __construct(){
+    private function __construct(){
         parent::__construct();
         $this->payment_method = new ModelPaymentMethod();
     }
-    function index(){
+    public function index(){
         return $this->payment_method->get();
     }
 
-    function show($id){
+    public function show($id){
         return $this->payment_method->getById($id);
     }
 
-    function store(){
+    public function store(){
         $name = $this->post("name");
         
         if(!$name){
@@ -32,7 +32,7 @@ class PaymentMethodController extends Controller {
         return $this->payment_method->create($data);
     }
     
-    function save($id){
+    public function save($id){
         $name = $this->post("name");
 
         $data = [];
@@ -43,7 +43,7 @@ class PaymentMethodController extends Controller {
         return $this->payment_method->update($id, $data);
     }
     
-    function destroy(){
+    public function destroy($id){
         return $this->get();
     }
 }

@@ -4,7 +4,7 @@ class ModelCity extends Model
 {
     protected $table = "city";
 
-    function get()
+    public function get()
     {
         $this->db->reset();
         $this->db->select("{$this->table}.id, {$this->table}.name, idregion, region.name as region, idcountry, country.name as country");
@@ -12,7 +12,7 @@ class ModelCity extends Model
         $this->db->join("country", "country.id", "region.idcountry", "inner");
         return $this->db->get();
     }
-    function getById($id)
+    public function getById($id)
     {
         $this->db->reset();
         $this->db->select("{$this->table}.id, {$this->table}.name, idcountry, country.name as country");
@@ -22,7 +22,7 @@ class ModelCity extends Model
         return $this->db->get();
     }
 
-    function create($data)
+    public function create($data)
     {
         $this->db->data($data);
         $id = $this->db->insert();
@@ -30,7 +30,7 @@ class ModelCity extends Model
         else return false;
     }
 
-    function update($id, array $data)
+    public function update($id, array $data)
     {
         $this->db->data($data);
         $this->db->where("{$this->primaryKey} = '$id'");

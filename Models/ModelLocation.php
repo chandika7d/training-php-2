@@ -4,19 +4,19 @@ class ModelLocation extends Model
 {
     protected $table = "location";
 
-    function get()
+    public function get()
     {
         $this->db->reset();
         return $this->db->get();
     }
-    function getById($id)
+    public function getById($id)
     {
         $this->db->reset();
         $this->db->where("{$this->table}.{$this->primaryKey} = '{$id}'");
         return $this->db->first();
     }
 
-    function create($data)
+    public function create($data)
     {
         $this->db->data($data);
         $id = $this->db->insert();
@@ -24,7 +24,7 @@ class ModelLocation extends Model
         else return false;
     }
 
-    function update($id, array $data)
+    public function update($id, array $data)
     {
         $this->db->data($data);
         $this->db->where("{$this->primaryKey} = '$id'");

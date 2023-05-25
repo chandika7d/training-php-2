@@ -3,19 +3,19 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelDriver.php";
 
 class DriverController extends Controller {
-    function __construct(){
+    private function __construct(){
         parent::__construct();
         $this->model_driver = new ModelDriver();
     }
-    function index(){
+    public function index(){
         return $this->model_driver->get();
     }
 
-    function show($id){
+    public function show($id){
         return $this->model_driver->getById($id);
     }
 
-    function store(){
+    public function store(){
         $name = $this->post("name");
         $idcountry = $this->post("idcountry");
         $idcity = $this->post("idcity");
@@ -86,7 +86,7 @@ class DriverController extends Controller {
         return $this->model_driver->create($data);
     }
     
-    function save($id){
+    public function save($id){
         $name = $this->post("name");
         $idcountry = $this->post("idcountry");
         $idcity = $this->post("idcity");
@@ -117,7 +117,7 @@ class DriverController extends Controller {
         return $this->model_driver->update($id, $data);
     }
     
-    function destroy(){
+    public function destroy($id){
         return $this->get();
     }
 }

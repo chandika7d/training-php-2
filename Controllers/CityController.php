@@ -3,19 +3,19 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelCity.php";
 
 class CityController extends Controller {
-    function __construct(){
+    private function __construct(){
         parent::__construct();
         $this->model_city = new ModelCity();
     }
-    function index(){
+    public function index(){
         return $this->model_city->get();
     }
 
-    function show($id){
+    public function show($id){
         return $this->model_city->getById($id);
     }
 
-    function store(){
+    public function store(){
         $name = $this->post("name");
         $idregion = $this->post("idregion");
         
@@ -46,7 +46,7 @@ class CityController extends Controller {
         return $this->model_city->create($data);
     }
     
-    function save($id){
+    public function save($id){
         $name = $this->post("name");
         $idregion = $this->post("idregion");
 
@@ -62,7 +62,7 @@ class CityController extends Controller {
         return $this->model_city->update($id, $data);
     }
     
-    function destroy(){
+    public function destroy($id){
         return $this->get();
     }
 }

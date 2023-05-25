@@ -4,7 +4,7 @@ class ModelDriver extends Model
 {
     protected $table = "driver";
 
-    function get()
+    public function get()
     {
         $this->db->reset();
         $this->db->select("driver.id, driver.name, CONCAT(country.countrycode, driver.phone) as phone, driver.email, city.name as city");
@@ -12,7 +12,7 @@ class ModelDriver extends Model
         $this->db->join("city", "city.id", "driver.idcity", "inner");
         return $this->db->get();
     }
-    function getById($id)
+    public function getById($id)
     {
         $this->db->reset();
         $this->db->select("driver.id, driver.name, CONCAT(country.countrycode, driver.phone) as phone, driver.email, city.name as city");
@@ -22,14 +22,14 @@ class ModelDriver extends Model
         return $this->db->first();
     }
 
-    function create($data)
+    public function create($data)
     {
         $this->db->data($data);
         $id = $this->db->insert();
         if ($id) return $this->getById($id);
         else return false;
     }
-    function update($id, array $data)
+    public function update($id, array $data)
     {
         $this->db->data($data);
         $this->db->where("{$this->primaryKey} = '$id'");

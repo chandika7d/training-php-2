@@ -3,12 +3,12 @@
 class RAW
 {
     private $data;
-    function __construct($string)
+    private function __construct($string)
     {
         $this->data = $string;
     }
 
-    function get()
+    public function get()
     {
         return $this->data;
     }
@@ -26,10 +26,10 @@ class DB
     private $orders = [];
     private $limit = "";
 
-    function __construct()
+    private function __construct()
     {
         try {
-            $config = include APP_PATH . "/Config/database.php";
+            $config = include_once APP_PATH . "/Config/database.php";
             $this->driver = new mysqli($config["host"], $config["user"], $config["password"], $config["name"]);
         } catch (\Throwable $th) {
             if ($th->getCode() == 1045) {
@@ -44,7 +44,7 @@ class DB
         }
     }
 
-    function __destruct()
+    private function __destruct()
     {
         if ($this->driver !== null) {
             $this->driver->close();
@@ -52,7 +52,7 @@ class DB
         }
     }
 
-    function reset()
+    public function reset()
     {
         $this->query = "";
         $this->select = "*";
@@ -63,7 +63,7 @@ class DB
         $this->limit = "";
     }
 
-    function multiple_assoc($query)
+    public function multiple_assoc($query)
     {
         $rows = [];
         if (!$query) {
@@ -77,21 +77,21 @@ class DB
         return $rows;
     }
 
-    function table($table)
+    public function table($table)
     {
         $this->table = $table;
     }
 
 
-    function primaryKey($pk)
+    public function primaryKey($pk)
     {
         $this->primaryKey = $pk;
     }
-    function data($data)
+    public function data($data)
     {
         $this->data = $data;
     }
-    function limit($f, $l = "")
+    public function limit($f, $l = "")
     {
         $this->limit = $f;
 
@@ -100,12 +100,12 @@ class DB
         }
     }
 
-    function join($rtable, $lparam, $rparam, $type = "inner")
+    public function join($rtable, $lparam, $rparam, $type = "inner")
     {
         $this->joins[] = "\n {$type} JOIN {$rtable} ON $lparam = $rparam";
     }
 
-    function query($query, $last_id = false)
+    public function query($query, $last_id = false)
     {
         try {
             $result = $this->driver->query($query);
@@ -119,7 +119,7 @@ class DB
         }
     }
 
-    function select($select)
+    public function select($select)
     {
         if (gettype($select) == "array") {
             $this->select = implode(" , ", $select);
@@ -128,7 +128,7 @@ class DB
         }
     }
 
-    function where($where, $or = false)
+    public function where($where, $or = false)
     {
         if (gettype($where) == "array") {
             $this->where[] = implode($or ? " OR " : " AND ", $where);
@@ -137,7 +137,7 @@ class DB
         }
     }
 
-    function orderBy($order)
+    public function orderBy($order)
     {
         if (gettype($order) == "array") {
             $this->orders[] = implode(" , ", $order);
@@ -146,21 +146,21 @@ class DB
         }
     }
 
-    static function RAW($data)
+    public static function RAW($data)
     {
         return new RAW($data);
     }
 
-    function lastQuery()
+    public function lastQuery()
     {
         return $this->query;
     }
-    function start()
+    public function start()
     {
         $this->driver->autocommit(FALSE);
         return $this->driver->begin_transaction();
     }
-    function commit()
+    public function commit()
     {
         if (!$this->driver->commit()) {
             echo "Commit transaction failed";
@@ -169,12 +169,12 @@ class DB
 
         return true;
     }
-    function rollback()
+    public function rollback()
     {
         return $this->driver->rollback();
     }
 
-    function get()
+    public function get()
     {
         $this->query = "SELECT $this->select from $this->table";
         if (count($this->joins) > 0) {
@@ -193,7 +193,7 @@ class DB
         $result = $this->query($this->query);
         return $this->multiple_assoc($result);
     }
-    function first()
+    public function first()
     {
         $this->query = "SELECT $this->select from $this->table";
         if (count($this->joins) > 0) {
@@ -211,7 +211,7 @@ class DB
         return $result->fetch_assoc();
     }
 
-    function insert()
+    public function insert()
     {
         $this->query = "INSERT INTO $this->table ";
         if (count($this->data) > 0) {
@@ -219,20 +219,20 @@ class DB
             $values = [];
             foreach ($this->data as $key => $value) {
                 $keys[] = $key;
-                $values[] = $value instanceof RAW ? $value->get() : "'".strip_tags($value)."'";
+                $values[] = $value instanceof RAW ? $value->get() : "'" . strip_tags($value) . "'";
             }
 
             $this->query .= "(" . implode(" , ", $keys) . ") VALUES(" . implode(",", $values) . ")";
         }
         return $this->query($this->query, true);
     }
-    function update()
+    public function update()
     {
         $this->query = "UPDATE $this->table SET ";
         if (count($this->data) > 0) {
             $arr = [];
             foreach ($this->data as $key => $value) {
-                $val = $value instanceof RAW ? $value->get() : "'".strip_tags($value)."'";
+                $val = $value instanceof RAW ? $value->get() : "'" . strip_tags($value) . "'";
                 $arr[] = "{$key} = {$val}";
             }
             $this->query .= implode(" , ", $arr);

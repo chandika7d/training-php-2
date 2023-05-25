@@ -4,14 +4,14 @@ class ModelRegion extends Model
 {
     protected $table = "region";
 
-    function get()
+    public function get()
     {
         $this->db->reset();
         $this->db->select("{$this->table}.id, {$this->table}.name, idcountry, country.name as country");
         $this->db->join("country", "country.id", "{$this->table}.idcountry", "inner");
         return $this->db->get();
     }
-    function getById($id)
+    public function getById($id)
     {
         $this->db->reset();
         $this->db->select("{$this->table}.id, {$this->table}.name, idcountry, country.name as country");
@@ -20,7 +20,7 @@ class ModelRegion extends Model
         return $this->db->get();
     }
 
-    function create($data)
+    public function create($data)
     {
         $this->db->data($data);
         $id = $this->db->insert();
@@ -28,7 +28,7 @@ class ModelRegion extends Model
         else return false;
     }
 
-    function update($id, array $data)
+    public function update($id, array $data)
     {
         $this->db->data($data);
         $this->db->where("{$this->primaryKey} = '$id'");

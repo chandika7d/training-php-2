@@ -3,19 +3,19 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelVehicleBrand.php";
 
 class VehicleBrandController extends Controller {
-    function __construct(){
+    private function __construct(){
         parent::__construct();
         $this->vehicle_brand = new ModelVehicleBrand();
     }
-    function index(){
+    public function index(){
         return $this->vehicle_brand->get();
     }
 
-    function show($id){
+    public function show($id){
         return $this->vehicle_brand->getById($id);
     }
 
-    function store(){
+    public function store(){
         $name = $this->post("name");
         $brand = $this->post("brand");
 
@@ -41,7 +41,7 @@ class VehicleBrandController extends Controller {
         return $this->vehicle_brand->create($data);
     }
     
-    function save($id){
+    public function save($id){
         $name = $this->post("name");
         $brand = $this->post("brand");
 
@@ -56,7 +56,7 @@ class VehicleBrandController extends Controller {
         return $this->vehicle_brand->update($id, $data);
     }
     
-    function destroy(){
+    public function destroy($id){
         return $this->get();
     }
 }

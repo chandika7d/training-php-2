@@ -3,19 +3,19 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelRegion.php";
 
 class RegionController extends Controller {
-    function __construct(){
+    private function __construct(){
         parent::__construct();
         $this->model_region = new ModelRegion();
     }
-    function index(){
+    public function index(){
         return $this->model_region->get();
     }
 
-    function show($id){
+    public function show($id){
         return $this->model_region->getById($id);
     }
 
-    function store(){
+    public function store(){
         $name = $this->post("name");
         $idcountry = $this->post("idcountry");
 
@@ -46,7 +46,7 @@ class RegionController extends Controller {
         return $this->model_region->create($data);
     }
     
-    function save($id){
+    public function save($id){
         $name = $this->post("name");
         $idcountry = $this->post("idcountry");
 
@@ -61,7 +61,7 @@ class RegionController extends Controller {
         return $this->model_region->update($id, $data);
     }
     
-    function destroy(){
+    public function destroy($id){
         return $this->get();
     }
 }

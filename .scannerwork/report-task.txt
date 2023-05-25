@@ -1,6 +1,6 @@
-projectKey=api-gojek2an
+projectKey=API-Gojek2an
 serverUrl=http://localhost:9999
 serverVersion=10.0.0.68432
-dashboardUrl=http://localhost:9999/dashboard?id=api-gojek2an
-ceTaskId=AYhUJ6sn7x83xUMlB5pS
-ceTaskUrl=http://localhost:9999/api/ce/task?id=AYhUJ6sn7x83xUMlB5pS
+dashboardUrl=http://localhost:9999/dashboard?id=API-Gojek2an
+ceTaskId=AYhUTU0_7x83xUMlB5p0
+ceTaskUrl=http://localhost:9999/api/ce/task?id=AYhUTU0_7x83xUMlB5p0

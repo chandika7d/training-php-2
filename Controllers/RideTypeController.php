@@ -3,19 +3,19 @@ require_once "Controller.php";
 require_once APP_PATH . "/Models/ModelRideType.php";
 
 class RideTypeController extends Controller {
-    function __construct(){
+    private function __construct(){
         parent::__construct();
         $this->model_ride_type = new ModelRideType();
     }
-    function index(){
+    public function index(){
         return $this->model_ride_type->get();
     }
 
-    function show($id){
+    public function show($id){
         return $this->model_ride_type->getById($id);
     }
 
-    function store(){
+    public function store(){
         $name = $this->post("name");
         $kmfee = $this->post("kmfee");
 
@@ -45,7 +45,7 @@ class RideTypeController extends Controller {
         return $this->model_ride_type->create($data);
     }
     
-    function save($id){
+    public function save($id){
         $name = $this->post("name");
         $kmfee = $this->post("kmfee");
 
@@ -60,7 +60,7 @@ class RideTypeController extends Controller {
         return $this->model_ride_type->update($id, $data);
     }
     
-    function destroy(){
+    public function destroy($id){
         return $this->get();
     }
 }

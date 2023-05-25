@@ -8,7 +8,7 @@ require_once APP_PATH . "/Models/ModelLocation.php";
 require_once APP_PATH . "/Models/ModelRideType.php";
 
 class OrderController extends Controller {
-    function __construct(){
+    private function __construct(){
         parent::__construct();
         $this->model_order = new ModelOrder();
         $this->model_driver = new ModelDriver();
@@ -17,19 +17,19 @@ class OrderController extends Controller {
         $this->model_location = new ModelLocation();
         $this->model_ride_type = new ModelRideType();
     }
-    function index(){
+    public function index(){
         $orders = $this->model_order->get();
         $orders = array_map("self::addAttribute", $orders);
         return $orders;
     }
 
-    function show($id){
+    public function show($id){
         $order = $this->model_order->getById($id);
         $order = $this->addAttribute($order);
         return $order;
     }
 
-    function store(){
+    public function store(){
         $orderdate = DB::RAW("NOW()");
         $idcustomer = $this->post("idcustomer");
         $iddriver = $this->post("iddriver");
@@ -128,7 +128,7 @@ class OrderController extends Controller {
         return $this->model_order->create($data);
     }
     
-    function pickup($id){
+    public function pickup($id){
         $date = DB::RAW("NOW()");
 
         $data = [
@@ -138,7 +138,7 @@ class OrderController extends Controller {
         return $this->model_order->update($id, $data);
     }
     
-    function drop($id){
+    public function drop($id){
         $date = DB::RAW("NOW()");
 
         $data = [
@@ -148,11 +148,11 @@ class OrderController extends Controller {
         return $this->model_order->update($id, $data);
     }
 
-    function destroy(){
+    public function destroy($id){
         return $this->get();
     }
 
-    function addAttribute($order){
+    private function addAttribute($order){
         $driver = $this->model_driver->getById($order['iddriver']);
         $customer = $this->model_customer->getById($order['idcustomer']);
         $vechile = $this->model_vehicle->getById($order['idvehicle']);
@@ -178,7 +178,7 @@ class OrderController extends Controller {
         return $order;
     }
 
-    function generateIdOrder($vehicle, $idcustomer, $iddriver){
+    private function generateIdOrder($vehicle, $idcustomer, $iddriver){
         // RB-137786-24-20824
         $vehicleCode = preg_replace('/[^A-Z]/', "", $vehicle['ridetype']);
         $date = date("Ymd");
