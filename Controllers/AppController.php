@@ -6,7 +6,8 @@ class AppController extends Controller {
     }
     function index(){
         return [
-            "message" => "Welcome to gocar api"
+            "message" => "Welcome to gocar api",
+            "routes" => get("router")
         ];
     }
 }

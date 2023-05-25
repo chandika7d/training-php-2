@@ -219,7 +219,7 @@ class DB
             $values = [];
             foreach ($this->data as $key => $value) {
                 $keys[] = $key;
-                $values[] = $value instanceof RAW ? $value->get() : "'{$value}'";
+                $values[] = $value instanceof RAW ? $value->get() : "'".strip_tags($value)."'";
             }
 
             $this->query .= "(" . implode(" , ", $keys) . ") VALUES(" . implode(",", $values) . ")";
@@ -232,7 +232,7 @@ class DB
         if (count($this->data) > 0) {
             $arr = [];
             foreach ($this->data as $key => $value) {
-                $val = $value instanceof RAW ? $value->get() : "'{$value}'";
+                $val = $value instanceof RAW ? $value->get() : "'".strip_tags($value)."'";
                 $arr[] = "{$key} = {$val}";
             }
             $this->query .= implode(" , ", $arr);

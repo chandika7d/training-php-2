@@ -17,26 +17,14 @@ class CountryController extends Controller {
 
     function store(){
         $name = $this->post("name");
-        $idcountry = $this->post("idcountry");
-        $phone = $this->post("phone");
-        $email = $this->post("email");
-        $password = $this->post("password");
+        $countrycode = $this->post("countrycode");
 
         $data = [];
         if($name){
             $data['name'] = $name;
         }
-        if($idcountry){
-            $data['idcountry'] = $idcountry;
-        }
-        if($phone){
-            $data['phone'] = $phone;
-        }
-        if($email){
-            $data['email'] = $email;
-        }
-        if($password){
-            $data['password'] = DB::RAW("SHA1('$password')");
+        if($countrycode){
+            $data['countrycode'] = $countrycode;
         }
 
         return $this->model_country->create($data);
@@ -44,26 +32,14 @@ class CountryController extends Controller {
     
     function save($id){
         $name = $this->post("name");
-        $idcountry = $this->post("idcountry");
-        $phone = $this->post("phone");
-        $email = $this->post("email");
-        $password = $this->post("password");
+        $countrycode = $this->post("countrycode");
 
         $data = [];
         if($name){
             $data['name'] = $name;
         }
-        if($idcountry){
-            $data['idcountry'] = $idcountry;
-        }
-        if($phone){
-            $data['phone'] = $phone;
-        }
-        if($email){
-            $data['email'] = $email;
-        }
-        if($password){
-            $data['password'] = DB::RAW("SHA1('$password')");
+        if($countrycode){
+            $data['countrycode'] = $countrycode;
         }
 
         return $this->model_country->update($id, $data);

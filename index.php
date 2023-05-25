@@ -15,6 +15,19 @@ function get($name, $default = null)
     return isset($GLOBALS[SYS_GLOBAL_VAR][$name]) ? $GLOBALS[SYS_GLOBAL_VAR][$name] : $default;
 }
 
+function getHeader($name = null, $default = null)
+{
+    $headers = headers_list();
+    $new_headers = [];
+    foreach ($headers as $header) {
+        // split each header by ':' and assign them to $key and $value
+        list($key, $value) = explode(':', $header, 2); // limit the explode to 2 items. 
+        // add trimed variables to the new array
+        $new_headers[strtolower(trim($key))] = trim($value);
+    }
+    return $name == null ? $new_headers : (isset($new_headers[$name]) ? $new_headers[$name] : $default);
+}
+
 function run()
 {
     require_once(APP_PATH . "/Config/router.php");
